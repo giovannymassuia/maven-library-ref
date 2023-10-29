@@ -25,11 +25,11 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      # Publish to GitHub Package Repository
-      - name: Publish to GitHub Package Repository
-        run: mvn deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      # Publish to GitHub Package Repository
+#      - name: Publish to GitHub Package Repository
+#        run: mvn deploy
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
       # Tag the new version
       - name: Create Tag
