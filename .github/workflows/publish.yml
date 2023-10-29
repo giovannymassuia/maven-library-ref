@@ -47,7 +47,7 @@ jobs:
         id: extract-changelog
         run: |
           # Extract the section for the current version from CHANGELOG.md
-          CHANGELOG=$(sed -n "/^## \[1.3\]/,/## \[/p" CHANGELOG.md | sed '$d')
+          CHANGELOG=$(sed -n "/^## \[${{ env.PROJECT_VERSION }}\]/,/## \[/p" CHANGELOG.md | sed '$d')
           # Set the extracted changelog as an output variable to use in subsequent steps
           echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
 
