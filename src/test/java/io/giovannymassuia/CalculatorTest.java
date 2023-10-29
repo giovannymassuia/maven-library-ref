@@ -11,4 +11,9 @@ class CalculatorTest {
         assertEquals(2, Calculator.sum(1, 1));
     }
 
+    @Test
+    void sub() {
+        assertEquals(0, Calculator.sub(1, 1));
+    }
+
 }
