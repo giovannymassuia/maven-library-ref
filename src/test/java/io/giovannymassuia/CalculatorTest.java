@@ -20,4 +20,9 @@ class CalculatorTest {
     void mult() {
         assertEquals(1, Calculator.mult(1, 1));
     }
+
+    @Test
+    void div() {
+        assertEquals(1, Calculator.div(1, 1));
+    }
 }
