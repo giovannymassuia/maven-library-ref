@@ -17,21 +17,9 @@ jobs:
           distribution: 'oracle'
           java-version: '21'
 
-      # Determine next version using semantic-release (dry run)
-      - name: Determine Next Version (semantic-release)
-        id: semver
-        uses: semantic-release/semantic-release@v17
-        with:
-          dry_run: true
-          branches: main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Update version in pom.xml
-      - name: Update pom.xml version
-        run: |
-          NEW_VERSION=${{ steps.semver.outputs.new_release_version }}
-          sed -i "s|<version>.*</version>|<version>$NEW_VERSION</version>|g" pom.xml
+      # Extract version from pom.xml
+      - name: Get the version
+        run: echo "PROJECT_VERSION=$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)" >> $GITHUB_ENV
 
       # Build the code
       - name: Build with Maven
@@ -42,24 +30,23 @@ jobs:
         run: mvn deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+            
       # Tag the new version
-      - name: Tag Version
-        run: git tag ${{ steps.semver.outputs.new_release_version }}
+      - name: Create Tag
+        run: git tag ${{ env.PROJECT_VERSION }}
+
+      # Push the new tag
+      - name: Push Tag
+        run: git push origin ${{ env.PROJECT_VERSION }}
 
       # Create GitHub Release
       - name: Create GitHub Release
-        id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.semver.outputs.new_release_version }}
-          release_name: Release ${{ steps.semver.outputs.new_release_version }}
-          body: ${{ steps.semver.outputs.new_release_notes }}
+          tag_name: ${{ env.PROJECT_VERSION }}
+          release_name: Release ${{ env.PROJECT_VERSION }}
+          body_path: CHANGELOG.md  # Use your changelog file as the body
           draft: false
           prerelease: false
-
-      # Push the new tag
-      - name: Push Tag
-        run: git push origin ${{ steps.semver.outputs.new_release_version }}
