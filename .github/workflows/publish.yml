@@ -1,0 +1,65 @@
+name: Build, Publish, and Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_publish_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '21'
+
+      # Determine next version using semantic-release (dry run)
+      - name: Determine Next Version (semantic-release)
+        id: semver
+        uses: semantic-release/semantic-release@v17
+        with:
+          dry_run: true
+          branches: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Update version in pom.xml
+      - name: Update pom.xml version
+        run: |
+          NEW_VERSION=${{ steps.semver.outputs.new_release_version }}
+          sed -i "s|<version>.*</version>|<version>$NEW_VERSION</version>|g" pom.xml
+
+      # Build the code
+      - name: Build with Maven
+        run: mvn clean install
+
+      # Publish to GitHub Package Repository
+      - name: Publish to GitHub Package Repository
+        run: mvn deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Tag the new version
+      - name: Tag Version
+        run: git tag ${{ steps.semver.outputs.new_release_version }}
+
+      # Create GitHub Release
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.semver.outputs.new_release_version }}
+          release_name: Release ${{ steps.semver.outputs.new_release_version }}
+          body: ${{ steps.semver.outputs.new_release_notes }}
+          draft: false
+          prerelease: false
+
+      # Push the new tag
+      - name: Push Tag
+        run: git push origin ${{ steps.semver.outputs.new_release_version }}
