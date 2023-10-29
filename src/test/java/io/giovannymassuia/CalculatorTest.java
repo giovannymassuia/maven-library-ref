@@ -16,4 +16,8 @@ class CalculatorTest {
         assertEquals(0, Calculator.sub(1, 1));
     }
 
+    @Test
+    void mult() {
+        assertEquals(1, Calculator.mult(1, 1));
+    }
 }
