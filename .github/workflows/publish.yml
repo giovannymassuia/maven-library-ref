@@ -48,10 +48,12 @@ jobs:
         run: |
           # Extract the section for the current version from CHANGELOG.md
           CHANGELOG=$(sed -n "/^## \[${{ env.PROJECT_VERSION }}\]/,/## \[/p" CHANGELOG.md | sed '$d')
-          # Set the extracted changelog as an output variable to use in subsequent steps
-          echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
+          # Set the extracted changelog as an environment variable
+          echo "CHANGELOG<<EOF"
+          echo "$CHANGELOG"
+          echo "EOF"
 
-      # Create GitHub Release
+    # Create GitHub Release
       - name: Create GitHub Release
         uses: actions/create-release@v1
         env:

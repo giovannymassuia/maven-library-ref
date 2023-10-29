@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 --
 
+## [1.3.1] - 2023-10-29
+
+### Added
+
+- Division feature.
+
 ## [1.3] - 2023-10-29
 
 ### Added
