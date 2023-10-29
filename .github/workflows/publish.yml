@@ -48,10 +48,8 @@ jobs:
         run: |
           # Extract the section for the current version from CHANGELOG.md
           CHANGELOG=$(sed -n "/^## \[${{ env.PROJECT_VERSION }}\]/,/## \[/p" CHANGELOG.md | sed '$d')
-          # Set the extracted changelog as an environment variable
-          echo "CHANGELOG<<EOF"
-          echo "$CHANGELOG"
-          echo "EOF"
+          # Use ::set-output to create an output variable for the step
+          echo "::set-output name=changelog::$CHANGELOG"
 
     # Create GitHub Release
       - name: Create GitHub Release
@@ -61,6 +59,6 @@ jobs:
         with:
           tag_name: ${{ env.PROJECT_VERSION }}
           release_name: Release ${{ env.PROJECT_VERSION }}
-          body: ${{ env.CHANGELOG }}
+          body: ${{ steps.extract-changelog.outputs.changelog }}
           draft: false
           prerelease: false
