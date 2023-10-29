@@ -25,12 +25,4 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Giovanny Massuia Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/giovannymassuia/maven-library-ref</url>
-        </repository>
-    </distributionManagement>
-
 </project>
