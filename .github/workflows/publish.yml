@@ -50,7 +50,7 @@ jobs:
           CHANGELOG=$(sed -n "/^## \[${{ env.PROJECT_VERSION }}\]/,/## \[/p" CHANGELOG.md | sed '$d')
           # Use ::set-output to create an output variable for the step
           #echo "::set-output name=changelog::$(echo "$CHANGELOG" | awk 'BEGIN{ORS="::newline::";} 1')"
-          echo "CHANGELOG=$CHANGELOG" >> $GITHUB_ENV
+          echo "CHANGELOG=$CHANGELOG" > version_changelog.md
 
       # Create GitHub Release
       - name: Create GitHub Release
@@ -60,6 +60,6 @@ jobs:
         with:
           tag_name: ${{ env.PROJECT_VERSION }}
           release_name: Release ${{ env.PROJECT_VERSION }}
-          body: ${{ env.CHANGELOG }}
+          body_path: version_changelog.md
           draft: false
           prerelease: false
