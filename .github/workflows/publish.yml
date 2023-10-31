@@ -30,7 +30,7 @@ jobs:
 
       # Publish to GitHub Package Repository
       - name: Publish to GitHub Package Repository
-        run: mvn deploy
+        run: mvn deploy -DskipTests=true -P github-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
@@ -42,7 +42,7 @@ jobs:
       - name: Push Tag
         run: git push origin ${{ env.PROJECT_VERSION }}
 
-        # Extract changelog for current version
+      # Extract changelog for current version
       - name: Extract changelog for current version
         id: extract-changelog
         run: |
@@ -62,3 +62,18 @@ jobs:
           body_path: version_changelog.md
           draft: false
           prerelease: false
+
+      # Publish to Maven Central
+      - name: Set up JDK for Maven Central
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'oracle'
+          java-version: '21'
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+      - name: Publish to Maven Central
+        run: mvn deploy -DskipTests=true -P ossrh-release
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
