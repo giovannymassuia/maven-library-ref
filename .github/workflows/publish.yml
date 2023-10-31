@@ -81,7 +81,7 @@ jobs:
           gpg --list-secret-keys --keyid-format LONG
       - name: Publish to Maven Central
         run: |
-          mvn deploy -DskipTests=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -P ossrh-release
+          mvn --no-transfer-progress --batch-mode deploy -DskipTests=true -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} -P ossrh-release
           mvn nexus-staging:release -P ossrh-release
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
