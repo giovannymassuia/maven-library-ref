@@ -6,7 +6,29 @@
 
     <groupId>io.giovannymassuia</groupId>
     <artifactId>maven-library-ref</artifactId>
-    <version>1.5</version>
+    <version>1.6</version>
+
+<!--    Required by OSSRH-->
+    <name>Maven Library Reference</name>
+    <description>Reference for Maven Library</description>
+    <url>https://github.com/giovannymassuia/maven-library-ref</url>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Giovanny Massuia</name>
+            <email>giovannymassuia.dev@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/giovannymassuia/maven-library-ref</url>
+        <connection>scm:git:git://github.com/giovannymassuia/maven-library-ref.git</connection>
+        <developerConnection>scm:git:git://github.com/giovannymassuia/maven-library-ref.git</developerConnection>
+    </scm>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
