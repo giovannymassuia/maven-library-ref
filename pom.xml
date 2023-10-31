@@ -6,7 +6,7 @@
 
     <groupId>io.giovannymassuia</groupId>
     <artifactId>maven-library-ref</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
