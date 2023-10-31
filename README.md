@@ -7,4 +7,9 @@
 ---
 
 - `gpg --armor --export-secret-keys YOUR_KEY_ID > private.gpg`
-- 
+
+
+---
+
+- https://repo.maven.apache.org/maven2/io/giovannymassuia/maven-library-ref/
+- https://central.sonatype.com/artifact/io.giovannymassuia/maven-library-ref/versions
