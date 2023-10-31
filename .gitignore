@@ -1,5 +1,7 @@
 secret.txt
 private.gpg
+private-bkp.gpg
+key-backup.asc
 
 target/
 !.mvn/wrapper/maven-wrapper.jar
