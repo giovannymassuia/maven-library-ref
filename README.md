@@ -1,0 +1,2 @@
+- https://central.sonatype.org/publish/requirements/gpg/#generating-a-key-pair
+- 
