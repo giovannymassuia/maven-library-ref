@@ -1,4 +1,5 @@
 secret.txt
+private.gpg
 
 target/
 !.mvn/wrapper/maven-wrapper.jar

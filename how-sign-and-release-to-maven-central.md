@@ -21,6 +21,7 @@ At this point, you will find that you are missing one step - being able to sign 
     1. Find your key-id (using `gpg --list-secret-keys --keyid-format=long`)
     2. Export the gpg secret key to an ASCII file using `gpg --export-secret-keys -a <key-id> > secret.txt`
     3. Edit `secret.txt` using a plain text editor, and replace all newlines with a literal "\n" (backslash + n) until everything is on a single line
+    4. Send key to a keyserver using `gpg --keyserver keyserver.ubuntu.com --send-keys <key-id>`
 2. Set up [GitHub Actions secrets](https://help.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets)
     1. Create a secret called `OSSRH_GPG_SECRET_KEY` using the text from your edited `secret.txt` file (the whole text should be in a single line) as the value
     2. Create a secret called `OSSRH_GPG_SECRET_KEY_PASSWORD` containing the password for your gpg secret key
