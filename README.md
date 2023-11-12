@@ -13,3 +13,8 @@
 
 - https://repo.maven.apache.org/maven2/io/giovannymassuia/maven-library-ref/
 - https://central.sonatype.com/artifact/io.giovannymassuia/maven-library-ref/versions
+
+---
+
+- https://javadoc.io/
+- [![javadoc](https://javadoc.io/badge2/io.giovannymassuia/maven-library-ref/javadoc.svg)](https://javadoc.io/doc/io.giovannymassuia/maven-library-ref)
